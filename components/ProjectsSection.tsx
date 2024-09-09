@@ -6,27 +6,27 @@ import { BsGithub, BsArrowUpRightSquare } from "react-icons/bs"
 
 const projects = [
   {
-    name: "Thankful Thoughts",
+    name: "PokeGan",
     description:
-      "ThankfulThoughts is a web app that generates an appreciative sentence of something or someone you are thankful for.",
-    image: "/thankfulthoughts.png",
-    github: "https://github.com/hqasmei/thankful-thoughts",
-    link: "https://thankfulthoughts.io/",
+      "A fun project that generates images of pokemon sprites.",
+    image: "/pokegan.jpg",
+    github: "https://github.com/yashwantreddy/PokeGan",
+    link: "https://github.com/yashwantreddy/PokeGan"
   },
   {
-    name: "PlatoIO",
-    description: "PlatoIO is a to do list app that built using the PERN stack.",
-    image: "/platoio.png",
-    github: "https://github.com/hqasmei/platoio",
-    link: "https://platoio.com/register",
+    name: "Telco-EDA",
+    description: "This is a exploratory data analysis project on a telecommunications dataset.",
+    image: "/telco.png",
+    github: "https://github.com/yashwantreddy/Telco-EDA",
+    link: "https://github.com/yashwantreddy/Telco-EDA",
   },
   {
-    name: "Kator Family Photos",
+    name: "Doctor Specialty Classification and Network Analysis",
     description:
-      "Kator Family Photos is a photos and video digitization service in the LA area.",
-    image: "/familyphotos.png",
-    github: "https://github.com/hqasmei/katorfamilyphotos",
-    link: "https://katorfamilyphotos.com/",
+      "This project uses machine learning to classify doctors by specialty and analyze the network of doctors.",
+    image: "/doc.png",
+    github: "https://github.com/yashwantreddy/Doctor-Specialty-Classification-and-Network-Analysis",
+    link: "https://github.com/yashwantreddy/Doctor-Specialty-Classification-and-Network-Analysis",
   },
 ]
 

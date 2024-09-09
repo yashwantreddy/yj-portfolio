@@ -2,17 +2,18 @@ import React from "react"
 import Image from "next/image"
 
 const skills = [
-  { skill: "HTML" },
-  { skill: "CSS" },
-  { skill: "JavaScript" },
-  { skill: "TypeScript" },
   { skill: "Python" },
-  { skill: "React" },
-  { skill: "Next.js" },
-  { skill: "Tailwind CSS" },
-  { skill: "Git" },
+  { skill: "PyTorch" },
+  { skill: "Tensorflow" },
+  { skill: "Langchain" },
+  { skill: "LLMs" },
+  { skill: "LangGraph" },
+  { skill: "CI/CD" },
+  { skill: "AWS" },
+  { skill: "Terraform" },
+  { skill: "Docker" },
   { skill: "GitHub" },
-  { skill: "Jupyter Notebooks" },
+  { skill: "MLOps" },
 ]
 
 const AboutSection = () => {
@@ -30,22 +31,23 @@ const AboutSection = () => {
               Get to know me!
             </h1>
             <p>
-              Hi, my name is Hosna and I am a{" "}
+              Hi, my name is Yash and I am a{" "}
               <span className="font-bold">{"highly ambitious"}</span>,
               <span className="font-bold">{" self-motivated"}</span>, and
-              <span className="font-bold">{" driven"}</span> software engineer
-              based in Los Angeles, CA.
+              <span className="font-bold">{" driven"}</span> Sr. Data Scientist + AI/ML Engineer
+              based in Columbus, OH.
             </p>
             <br />
             <p>
-              I graduated from California State University, Northridge in 2019
-              with a BS in Computer Engineering and have been working in the
-              field ever since.
+              I graduated from the University of Denver with a Master's Degree 
+              in data science and a specialization in Natural Language Processing (NLP).
+              I'm a self-starter and a quick learner. I love to learn new things and 
+              apply them to real-world problems!
             </p>
             <br />
             <p>
               I have a wide range of hobbies and passions that keep me busy.
-              From reading, playing sports, traveling, to making YouTube videos,
+              From reading, playing sports, traveling, to making funny AI-generated videos for my neice,
               I am always seeking new experiences and love to keep myself
               engaged and learning new things.
             </p>
@@ -53,12 +55,12 @@ const AboutSection = () => {
             <p>
               I believe that you should{" "}
               <span className="font-bold text-teal-500">
-                never stop growing
+                never stop learning
               </span>{" "}
               and that&#39;s what I strive to do, I have a passion for
               technology and a desire to always push the limits of what is
               possible. I am excited to see where my career takes me and am
-              always open to new opportunities. 🙂
+              always open to new opportunities. 🚀
             </p>
           </div>
           <div className="text-center md:w-1/2 md:text-left">
@@ -76,11 +78,11 @@ const AboutSection = () => {
               })}
             </div>
             <Image
-              src="/hero-image.png"
+              src="/hero-image.webp"
               alt=""
               width={325}
               height={325}
-              className="hidden md:block md:relative md:bottom-4 md:left-32 md:z-0"
+              className="hidden md:block md:relative md:bottom+2 md:left-30 md:z-0"
             />
           </div>
         </div>
