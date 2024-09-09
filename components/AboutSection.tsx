@@ -34,14 +34,14 @@ const AboutSection = () => {
               Hi, my name is Yash and I am a{" "}
               <span className="font-bold">{"highly ambitious"}</span>,
               <span className="font-bold">{" self-motivated"}</span>, and
-              <span className="font-bold">{" driven"}</span> Sr. Data Scientist + AI/ML Engineer
+              <span className="font-bold">{" constantly learning"}</span> Sr. Data Scientist + AI/ML Engineer
               based in Columbus, OH.
             </p>
             <br />
             <p>
-              I graduated from the University of Denver with a Master's Degree 
+              I graduated from the University of Denver with a Master&apos;s Degree 
               in data science and a specialization in Natural Language Processing (NLP).
-              I'm a self-starter and a quick learner. I love to learn new things and 
+              I&apos;m a self-starter and a quick learner. I love to learn new things and 
               apply them to real-world problems!
             </p>
             <br />

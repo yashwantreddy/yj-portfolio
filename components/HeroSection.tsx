@@ -25,7 +25,7 @@ const HeroSection = () => {
               Sr. Data Scientist + AI/ML Engineer{" "}
             </span>
             based in Columbus, OH. I have a passion for building smart systems that
-            solve real-world problems and positively impact people's lives.
+            solve real-world problems and positively impact people&apos;s lives.
           </p>
           <Link
             to="projects"
