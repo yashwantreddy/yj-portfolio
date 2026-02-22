@@ -1,35 +1,51 @@
-"use client" // this is a client component
+"use client"
 
-import React, { useEffect, useRef, ReactNode } from "react"
-interface Props {
+import { useEffect, useRef, type ReactNode } from "react"
+
+interface SlideUpProps {
   offset?: string
   children?: ReactNode
-  // any props that come into the component
 }
 
-export default function SlideUp({ children, offset = "0px" }: Props) {
-  const ref = useRef(null)
+export default function SlideUp({ children, offset = "0px" }: SlideUpProps) {
+  const ref = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
+    const element = ref.current
+
+    if (!element) {
+      return
+    }
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+    if (reduceMotion) {
+      element.classList.remove("opacity-0", "translate-y-8")
+      return
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.remove("opacity-0")
-            entry.target.classList.add("animate-slideUpCubiBezier")
+            entry.target.classList.remove("opacity-0", "translate-y-8")
+            entry.target.classList.add("animate-slide-up")
+            observer.unobserve(entry.target)
           }
         })
       },
       { rootMargin: offset }
     )
 
-    if (ref.current) {
-      observer.observe(ref.current)
+    observer.observe(element)
+
+    return () => {
+      observer.disconnect()
     }
-  }, [ref])
+  }, [offset])
 
   return (
-    <div ref={ref} className="relative opacity-0">
+    <div ref={ref} className="relative translate-y-8 opacity-0">
       {children}
     </div>
   )

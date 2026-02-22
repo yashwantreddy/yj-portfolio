@@ -1,0 +1,85 @@
+name: Security Audit
+
+on:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 14 * * 1"
+
+jobs:
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Run production dependency audit (blocking)
+        run: npm run security:audit:prod
+
+      - name: Run full dependency audit (report-only)
+        run: npm run security:audit:all
+
+      - name: Run secret scan (blocking)
+        run: npm run security:secrets
+
+      - name: Run external link policy check (blocking)
+        run: npm run security:links
+
+      - name: Start app for runtime header verification
+        run: |
+          PORT=3001 npm run start -- --hostname 127.0.0.1 --port 3001 > /tmp/security-app.log 2>&1 &
+          echo $! > /tmp/security-app.pid
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3001/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "App did not start within timeout."
+          cat /tmp/security-app.log || true
+          exit 1
+
+      - name: Verify runtime security headers (blocking)
+        env:
+          SECURITY_CHECK_URL: http://127.0.0.1:3001
+        run: npm run security:headers
+
+      - name: Stop app
+        if: always()
+        run: |
+          if [ -f /tmp/security-app.pid ]; then
+            kill "$(cat /tmp/security-app.pid)" || true
+          fi
+
+      - name: Generate consolidated security report
+        if: always()
+        run: npm run security:report
+
+      - name: Upload security artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-audit-artifacts
+          path: |
+            docs/security/reports/*.json
+            docs/security/reports/security-summary.md
+            docs/security/audit-baseline.md
+            docs/security/risk-register.md

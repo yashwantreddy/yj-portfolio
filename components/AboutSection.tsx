@@ -1,94 +1,57 @@
-import React from "react"
 import Image from "next/image"
+import type { AboutContent } from "@/data/portfolio"
+import SlideUp from "@/components/SlideUp"
 
-const skills = [
-  { skill: "Python" },
-  { skill: "PyTorch" },
-  { skill: "Tensorflow" },
-  { skill: "Langchain" },
-  { skill: "LLMs" },
-  { skill: "LangGraph" },
-  { skill: "CI/CD" },
-  { skill: "AWS" },
-  { skill: "Terraform" },
-  { skill: "Docker" },
-  { skill: "GitHub" },
-  { skill: "MLOps" },
-]
+interface AboutSectionProps {
+  about: AboutContent
+}
 
-const AboutSection = () => {
+export default function AboutSection({ about }: AboutSectionProps) {
   return (
-    <section id="about">
-      <div className="my-12 pb-12 md:pt-16 md:pb-48">
-        <h1 className="text-center font-bold text-4xl">
-          About Me
-          <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
-        </h1>
-
-        <div className="flex flex-col space-y-10 items-stretch justify-center align-top md:space-x-10 md:space-y-0 md:p-4 md:flex-row md:text-left">
-          <div className="md:w-1/2 ">
-            <h1 className="text-center text-2xl font-bold mb-6 md:text-left">
-              Get to know me!
-            </h1>
-            <p>
-              Hi, my name is Yash and I am a{" "}
-              <span className="font-bold">{"highly ambitious"}</span>,
-              <span className="font-bold">{" self-motivated"}</span>, and
-              <span className="font-bold">{" constantly learning"}</span> Sr. Data Scientist + AI/ML Engineer
-              based in Columbus, OH.
-            </p>
-            <br />
-            <p>
-              I graduated from the University of Denver with a Master&apos;s Degree 
-              in data science and a specialization in Natural Language Processing (NLP).
-              I&apos;m a self-starter and a quick learner. I love to learn new things and 
-              apply them to real-world problems!
-            </p>
-            <br />
-            <p>
-              I have a wide range of hobbies and passions that keep me busy.
-              From reading, playing sports, traveling, to making funny AI-generated videos for my neice,
-              I am always seeking new experiences and love to keep myself
-              engaged and learning new things.
-            </p>
-            <br />
-            <p>
-              I believe that you should{" "}
-              <span className="font-bold text-teal-500">
-                never stop learning
-              </span>{" "}
-              and that&#39;s what I strive to do, I have a passion for
-              technology and a desire to always push the limits of what is
-              possible. I am excited to see where my career takes me and am
-              always open to new opportunities. 🚀
-            </p>
-          </div>
-          <div className="text-center md:w-1/2 md:text-left">
-            <h1 className="text-2xl font-bold mb-6">My Skills</h1>
-            <div className="flex flex-wrap flex-row justify-center z-10 md:justify-start">
-              {skills.map((item, idx) => {
-                return (
-                  <p
-                    key={idx}
-                    className="bg-gray-200 px-4 py-2 mr-2 mt-2 text-gray-500 rounded font-semibold"
-                  >
-                    {item.skill}
-                  </p>
-                )
-              })}
+    <section id="about" className="scroll-mt-28 py-20 md:py-24">
+      <SlideUp offset="-120px 0px -120px 0px">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-6">
+            <p className="font-mono text-xs uppercase tracking-[0.24em] text-brand-cyan">{about.heading}</p>
+            <h2 className="font-display text-balance text-4xl font-bold text-ink sm:text-5xl">{about.title}</h2>
+            <div className="space-y-4 text-base leading-relaxed text-ink-soft sm:text-lg">
+              {about.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
             </div>
-            <Image
-              src="/hero-image.webp"
-              alt=""
-              width={325}
-              height={325}
-              className="hidden md:block md:relative md:bottom+2 md:left-30 md:z-0"
-            />
+          </div>
+
+          <div className="space-y-6 rounded-2xl border border-border-soft bg-surface-panel p-6">
+            <div className="overflow-hidden rounded-2xl border border-border-soft">
+              <Image
+                src={about.visual.src}
+                alt={about.visual.alt}
+                width={1024}
+                height={1024}
+                className="h-52 w-full object-cover"
+              />
+            </div>
+
+            <div className="space-y-5">
+              {about.skills.map((group) => (
+                <div key={group.category} className="space-y-2">
+                  <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-brand-cyan">{group.category}</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {group.items.map((skill) => (
+                      <span
+                        key={skill}
+                        className="rounded-full border border-border-soft bg-surface px-3 py-1 text-xs font-semibold text-ink-soft"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </SlideUp>
     </section>
   )
 }
-
-export default AboutSection

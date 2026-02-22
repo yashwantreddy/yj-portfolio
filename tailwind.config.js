@@ -1,44 +1,51 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: "class",
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-
-    // Or if using `src` directory:
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      screens: { sm: "480px", md: "768px", lg: "976px", xl: "1440pd" },
-      animation: {
-        fadeIn: "fadeIn 1.5s",
-        bounce:
-          "bounce 0.5s alternate cubic-bezier(0.95, 0.05, 0.795, 0.035) infinite",
-        slideUp: "slideUp 0.5s",
-        slideUpEaseInOut: "slideUp 0.5s ease-in-out",
-        slideUpCubiBezier: "slideUp 1s cubic-bezier(0.165, 0.84, 0.44, 1)",
+      screens: {
+        sm: "480px",
+        md: "768px",
+        lg: "976px",
+        xl: "1440px",
       },
-      animationDelay: {
-        0: "0s",
-        2: "0.2s",
-        4: "0.4s",
-        6: "0.6s",
+      fontFamily: {
+        display: ["var(--font-display)", "sans-serif"],
+        body: ["var(--font-body)", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
+      },
+      colors: {
+        surface: "rgb(var(--surface) / <alpha-value>)",
+        "surface-panel": "rgb(var(--surface-panel) / <alpha-value>)",
+        ink: "rgb(var(--ink) / <alpha-value>)",
+        "ink-soft": "rgb(var(--ink-soft) / <alpha-value>)",
+        "border-soft": "rgb(var(--border-soft) / <alpha-value>)",
+        "brand-cyan": "rgb(var(--brand-cyan) / <alpha-value>)",
+        "brand-cyan-strong": "rgb(var(--brand-cyan-strong) / <alpha-value>)",
+        "brand-lime": "rgb(var(--brand-lime) / <alpha-value>)",
+      },
+      boxShadow: {
+        "soft-xl": "0 22px 65px -24px rgba(9, 16, 26, 0.5)",
       },
       keyframes: {
-        fadeIn: {
-          from: { opacity: 0 },
-          to: { opacity: 1 },
+        fadeInUp: {
+          "0%": { opacity: "0", transform: "translateY(24px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
         slideUp: {
-          from: { transform: "translateY(100%)" },
-          to: { transform: "translateY(0)" },
+          "0%": { opacity: "0", transform: "translateY(28px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        bounce: {
-          from: { transform: "translateY(10px)" },
-          to: { transform: "translateY(0)" },
+        float: {
+          "0%": { transform: "translateY(0px)" },
+          "100%": { transform: "translateY(8px)" },
         },
+      },
+      animation: {
+        "fade-in-up": "fadeInUp 850ms cubic-bezier(0.16, 1, 0.3, 1) both",
+        "slide-up": "slideUp 900ms cubic-bezier(0.165, 0.84, 0.44, 1) both",
+        float: "float 850ms ease-in-out infinite alternate",
       },
     },
   },

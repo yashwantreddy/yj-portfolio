@@ -1,59 +1,94 @@
-"use client" // this is a client component
-import React from "react"
+"use client"
+
 import Image from "next/image"
 import { Link } from "react-scroll/modules"
+import type { CredibilityItem, HeroContent } from "@/data/portfolio"
 import { HiArrowDown } from "react-icons/hi"
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  hero: HeroContent
+  credibility: CredibilityItem[]
+}
+
+export default function HeroSection({ hero, credibility }: HeroSectionProps) {
   return (
-    <section id="home">
-      <div className="flex flex-col text-center items-center justify-center animate-fadeIn animation-delay-2 my-10 py-16 sm:py-32 md:py-48 md:flex-row md:space-x-4 md:text-left">
-        <div className="md:mt-2 md:w-1/2">
-          <Image
-            src="/headshot.jpg"
-            alt=""
-            width={325}
-            height={325}
-            className="rounded-full shadow-2xl"
-          />
-        </div>
-        <div className="md:mt-2 md:w-3/5">
-          <h1 className="text-4xl font-bold mt-6 md:mt-0 md:text-7xl">Hi, I&#39;m Yash!</h1>
-          <p className="text-lg mt-4 mb-6 md:text-2xl">
-            I&#39;m a{" "}
-            <span className="font-semibold text-teal-600">
-              Sr. Data Scientist + AI/ML Engineer{" "}
-            </span>
-            based in Columbus, OH. I have a passion for building smart systems that
-            solve real-world problems and positively impact people&apos;s lives.
+    <section id="home" className="relative scroll-mt-28 pt-6">
+      <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="space-y-6 animate-fade-in-up [animation-delay:120ms]">
+          <p className="font-mono text-xs uppercase tracking-[0.28em] text-brand-cyan">
+            {hero.role}
           </p>
-          <Link
-            to="projects"
-            className="text-neutral-100 font-semibold px-6 py-3 bg-teal-600 rounded shadow hover:bg-teal-700"
-            activeClass="active"
-            spy={true}
-            smooth={true}
-            offset={-100}
-            duration={500}
-          >
-            Projects
-          </Link>
+          <h1 className="font-display text-balance text-5xl font-extrabold leading-[0.95] text-ink sm:text-6xl md:text-7xl">
+            {hero.name}
+          </h1>
+          <p className="max-w-2xl text-2xl font-semibold leading-tight text-ink/90 sm:text-3xl">
+            {hero.statement}
+          </p>
+          <p className="max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">{hero.summary}</p>
+          <div className="inline-flex items-center gap-3 rounded-full border border-border-soft bg-surface-panel px-4 py-2 text-sm">
+            <span className="h-2 w-2 rounded-full bg-brand-lime shadow-[0_0_20px_rgba(162,255,82,0.9)]" />
+            <span className="font-mono uppercase tracking-wider text-ink-soft">{hero.location}</span>
+          </div>
+          <div className="flex flex-col gap-3 pt-2 sm:flex-row">
+            <Link
+              to={hero.primaryCta.page}
+              smooth
+              duration={500}
+              offset={-96}
+              className="inline-flex cursor-pointer items-center justify-center rounded-full bg-brand-cyan px-6 py-3 text-sm font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:bg-brand-cyan-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan"
+            >
+              {hero.primaryCta.label}
+            </Link>
+            <Link
+              to={hero.secondaryCta.page}
+              smooth
+              duration={500}
+              offset={-96}
+              className="inline-flex cursor-pointer items-center justify-center rounded-full border border-border-soft bg-surface-panel px-6 py-3 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:border-brand-cyan"
+            >
+              {hero.secondaryCta.label}
+            </Link>
+          </div>
+        </div>
+
+        <div className="relative animate-fade-in-up [animation-delay:240ms]">
+          <div className="absolute -left-8 -top-10 hidden h-32 w-32 rounded-full bg-brand-cyan/30 blur-3xl md:block" />
+          <div className="absolute -bottom-10 -right-6 hidden h-40 w-40 rounded-full bg-brand-lime/20 blur-3xl md:block" />
+          <div className="relative overflow-hidden rounded-[2.2rem] border border-border-soft bg-surface-panel p-3 shadow-soft-xl">
+            <Image
+              src={hero.portrait.src}
+              alt={hero.portrait.alt}
+              width={1123}
+              height={701}
+              priority
+              className="aspect-[16/11] w-full rounded-[1.6rem] object-cover"
+            />
+            <div className="pointer-events-none absolute inset-0 rounded-[2.2rem] border border-white/10" />
+          </div>
         </div>
       </div>
-      <div className="flex flex-row items-center text-center justify-center ">
+
+      <div className="mt-12 grid gap-4 rounded-2xl border border-border-soft bg-surface-panel p-5 sm:grid-cols-2 xl:grid-cols-4">
+        {credibility.map((item) => (
+          <div key={item.label} className="rounded-xl border border-border-soft bg-surface/60 p-4">
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-brand-cyan">{item.label}</p>
+            <p className="mt-2 text-sm font-semibold leading-snug text-ink sm:text-base">{item.value}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-10 flex justify-center">
         <Link
           to="about"
-          activeClass="active"
-          spy={true}
-          smooth={true}
-          offset={-100}
+          smooth
           duration={500}
+          offset={-96}
+          aria-label="Scroll to about section"
+          className="inline-flex cursor-pointer items-center justify-center rounded-full border border-border-soft bg-surface-panel p-3 text-ink transition hover:border-brand-cyan"
         >
-          <HiArrowDown size={35} className="animate-bounce" />
+          <HiArrowDown className="animate-float text-xl" />
         </Link>
       </div>
     </section>
   )
 }
-
-export default HeroSection
