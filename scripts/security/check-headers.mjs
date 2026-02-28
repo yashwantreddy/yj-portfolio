@@ -35,6 +35,7 @@ const cspChecks = [
   "default-src 'self'",
   "frame-ancestors 'none'",
   "https://beamanalytics.b-cdn.net",
+  "https://*.beamanalytics.io",
 ]
 
 const failedCspChecks = cspChecks.filter((entry) => !csp.includes(entry))

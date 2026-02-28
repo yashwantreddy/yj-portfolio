@@ -9,7 +9,6 @@ Personal portfolio built with Next.js (App Router), TypeScript, and Tailwind CSS
 - TypeScript
 - Tailwind CSS
 - `react-icons`
-- `react-scroll`
 - `next-themes`
 
 ## Getting Started

@@ -7,7 +7,7 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' blob: data:",
   "font-src 'self' data:",
-  "connect-src 'self' https://beamanalytics.b-cdn.net",
+  "connect-src 'self' https://beamanalytics.b-cdn.net https://*.beamanalytics.io",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",

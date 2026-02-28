@@ -46,7 +46,7 @@ Configured in `next.config.js` for all routes:
 The app intentionally loads Beam analytics from `https://beamanalytics.b-cdn.net/beam.min.js`.
 
 - Rationale: portfolio analytics requirement.
-- Control: domain is explicitly allowlisted in CSP `script-src` and `connect-src`.
+- Control: CDN script origin and Beam ingest endpoints are explicitly allowlisted in CSP `script-src` and `connect-src`.
 - Residual risk: third-party supply-chain exposure if CDN asset changes.
 - Mitigation: monitor vendor updates and revalidate CSP + script necessity during weekly audit.
 

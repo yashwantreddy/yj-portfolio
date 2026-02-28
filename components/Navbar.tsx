@@ -1,30 +1,71 @@
 "use client"
 
-import { useState } from "react"
-import { Link } from "react-scroll/modules"
+import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
 import { RiMoonFill, RiSunLine } from "react-icons/ri"
 import { IoMdClose, IoMdMenu } from "react-icons/io"
+import SectionLink from "@/components/SectionLink"
 import { portfolioContent } from "@/data/portfolio"
+import { SECTION_SCROLL_OFFSET } from "@/lib/sectionNavigation"
 
 export default function Navbar() {
   const { systemTheme, theme, setTheme } = useTheme()
   const currentTheme = theme === "system" ? systemTheme : theme
   const [open, setOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState("home")
+
+  useEffect(() => {
+    const sectionIds = portfolioContent.navItems.map((item) => item.page)
+    let frame = 0
+
+    function updateActiveSection() {
+      const anchorLine = window.scrollY + SECTION_SCROLL_OFFSET + window.innerHeight * 0.2
+      let nextSection = sectionIds[0]
+
+      for (const id of sectionIds) {
+        const section = document.getElementById(id)
+        if (section && section.offsetTop <= anchorLine) {
+          nextSection = id
+        }
+      }
+
+      setActiveSection(nextSection)
+    }
+
+    function queueUpdate() {
+      if (frame) {
+        return
+      }
+
+      frame = window.requestAnimationFrame(() => {
+        updateActiveSection()
+        frame = 0
+      })
+    }
+
+    updateActiveSection()
+    window.addEventListener("scroll", queueUpdate, { passive: true })
+    window.addEventListener("resize", queueUpdate)
+
+    return () => {
+      window.removeEventListener("scroll", queueUpdate)
+      window.removeEventListener("resize", queueUpdate)
+      if (frame) {
+        window.cancelAnimationFrame(frame)
+      }
+    }
+  }, [])
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border-soft bg-surface/80 backdrop-blur-xl">
       <div className="mx-auto flex w-full max-w-[1240px] items-center justify-between px-4 py-3 sm:px-8 lg:px-12">
-        <Link
+        <SectionLink
           to="home"
-          smooth
-          duration={500}
-          offset={-96}
           className="cursor-pointer font-display text-xl font-bold tracking-tight text-ink sm:text-2xl"
-          onClick={() => setOpen(false)}
+          onNavigate={() => setOpen(false)}
         >
           {portfolioContent.hero.name}
-        </Link>
+        </SectionLink>
 
         <button
           aria-label="Toggle navigation"
@@ -42,33 +83,28 @@ export default function Navbar() {
           <ul className="flex flex-col gap-2 md:flex-row md:items-center md:gap-1">
             {portfolioContent.navItems.map((item) => (
               <li key={item.page}>
-                <Link
+                <SectionLink
                   to={item.page}
-                  smooth
-                  duration={500}
-                  offset={-96}
-                  spy
-                  activeClass="active-nav-link"
-                  className="active-nav-link-target block cursor-pointer rounded-full px-3 py-2 text-sm font-semibold text-ink-soft transition hover:text-ink"
-                  onClick={() => setOpen(false)}
+                  aria-current={activeSection === item.page ? "page" : undefined}
+                  className={`active-nav-link-target block cursor-pointer rounded-full px-3 py-2 text-sm font-semibold text-ink-soft transition hover:text-ink ${
+                    activeSection === item.page ? "active-nav-link" : ""
+                  }`}
+                  onNavigate={() => setOpen(false)}
                 >
                   {item.label}
-                </Link>
+                </SectionLink>
               </li>
             ))}
           </ul>
 
           <div className="mt-4 flex items-center gap-2 md:mt-0 md:pl-2">
-            <Link
+            <SectionLink
               to="contact"
-              smooth
-              duration={500}
-              offset={-96}
               className="inline-flex cursor-pointer items-center justify-center rounded-full bg-brand-cyan px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-950 transition hover:bg-brand-cyan-strong"
-              onClick={() => setOpen(false)}
+              onNavigate={() => setOpen(false)}
             >
               Hire Me
-            </Link>
+            </SectionLink>
             <button
               aria-label={currentTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
               onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
